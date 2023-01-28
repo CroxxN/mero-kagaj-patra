@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:mero_kagaj_patra/src/Recognize/RecognizeMain.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -12,9 +17,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  Widget build(BuildContext context) {
+  Future<Widget> build(BuildContext context) async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     return MaterialApp(
       title: 'Mero Kagaj Patra',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => RecognizeMainScreen(),
+        '/response': (context) => ResponseMainScreen(),
+        // '/history': (context) => RecognizeMainScreen(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

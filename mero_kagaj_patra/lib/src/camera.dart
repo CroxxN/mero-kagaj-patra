@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mero_kagaj_patra/src/camerautil.dart';
+import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LicenseCamera extends CameraApp {
   @override
@@ -7,6 +9,7 @@ class LicenseCamera extends CameraApp {
 }
 
 class _LicenseCameraState extends CameraAppState {
+  final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -32,7 +35,15 @@ class _LicenseCameraState extends CameraAppState {
   Future<void> classifyLicense() async {
     try {
       String path = await captureImage();
-      print(path);
+      await db
+          .collection('license')
+          .doc(path)
+          .get()
+          .then((DocumentSnapshot doc) {
+        final data = doc.data();
+        if (!mounted) return;
+        Navigator.pushNamed(context, '/response', arguments: data);
+      });
       // classify(path);
     } catch (e) {
       print(e);

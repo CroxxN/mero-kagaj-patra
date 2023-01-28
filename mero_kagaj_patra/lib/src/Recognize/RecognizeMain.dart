@@ -11,7 +11,7 @@ class RecognizeMainScreen extends StatelessWidget {
           AlignedButton(
             toolTip: "Instructions",
             icon: Icons.info_outline,
-            alignment: Alignment.topLeft,
+            alignment: Alignment.bottomRight,
             onPressed: () {
               Navigator.of(context).pushNamed('/instructions');
             },
@@ -19,7 +19,7 @@ class RecognizeMainScreen extends StatelessWidget {
           AlignedButton(
             toolTip: "History",
             icon: Icons.history,
-            alignment: Alignment.topRight,
+            alignment: Alignment.bottomLeft,
             onPressed: () {
               Navigator.of(context).pushNamed('/history');
             },
