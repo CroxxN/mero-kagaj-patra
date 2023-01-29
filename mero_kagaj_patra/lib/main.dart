@@ -1,38 +1,48 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:mero_kagaj_patra/src/Recognize/RecognizeMain.dart';
+import 'dart:convert';
 
-Future<void> main() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(MyApp());
+import 'package:flutter/material.dart';
+// import 'firebase_options.dart';
+import 'package:mero_kagaj_patra/src/Recognize/RecognizeMain.dart';
+import 'package:mero_kagaj_patra/src/Reponse/Reponse.dart';
+import 'package:mero_kagaj_patra/src/Validation/validation.dart';
+
+void main() async {
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   @override
-  Future<Widget> build(BuildContext context) async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+  Widget build(BuildContext context) {
+    // await Firebase.initializeApp(
+    //   options: DefaultFirebaseOptions.currentPlatform,
+    // );
+    final String response = jsonEncode({
+      "name": "Rajesh",
+      "valid": true,
+      "expiry": "2021-12-31",
+    });
     return MaterialApp(
       title: 'Mero Kagaj Patra',
       initialRoute: '/',
       routes: {
-        '/': (context) => RecognizeMainScreen(),
-        '/response': (context) => ResponseMainScreen(),
+        '/': (context) => const RecognizeMainScreen(),
+        '/response': (context) => ResponseMainScreen(response: response),
+        '/validation': (context) => const ValidationMainScreen(),
         // '/history': (context) => RecognizeMainScreen(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RecognizeMainScreen(),
+      home: const RecognizeMainScreen(),
     );
   }
 }

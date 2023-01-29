@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mero_kagaj_patra/src/camera.dart';
 
 class RecognizeMainScreen extends StatelessWidget {
+  const RecognizeMainScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,15 +14,15 @@ class RecognizeMainScreen extends StatelessWidget {
             icon: Icons.info_outline,
             alignment: Alignment.bottomRight,
             onPressed: () {
-              Navigator.of(context).pushNamed('/instructions');
+              Navigator.of(context).pushNamed('/validation');
             },
           ),
           AlignedButton(
-            toolTip: "History",
-            icon: Icons.history,
+            toolTip: "Manual Input",
+            icon: Icons.keyboard,
             alignment: Alignment.bottomLeft,
             onPressed: () {
-              Navigator.of(context).pushNamed('/history');
+              Navigator.of(context).pushNamed('/validation');
             },
           ),
         ],

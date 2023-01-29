@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
 class CameraApp extends StatefulWidget {
-  /// A Camera Widget that can be reused for different components
-  ///
-  /// To add more features for a component, inherit and override this class
+  const CameraApp({Key? key}) : super(key: key);
   @override
   CameraAppState createState() => CameraAppState();
 }

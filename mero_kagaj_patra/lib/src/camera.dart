@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mero_kagaj_patra/src/camerautil.dart';
 import 'package:http/http.dart' as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LicenseCamera extends CameraApp {
   @override
@@ -9,7 +8,6 @@ class LicenseCamera extends CameraApp {
 }
 
 class _LicenseCameraState extends CameraAppState {
-  final db = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -18,7 +16,7 @@ class _LicenseCameraState extends CameraAppState {
         if (snapshot.connectionState == ConnectionState.done) {
           return GestureDetector(
               excludeFromSemantics: true,
-              onTap: classifyLicense,
+              onDoubleTap: classifyLicense,
               child: Tooltip(
                   // add Tooltip for screen readers
                   message: "Double Tap to Identify License",
@@ -34,19 +32,18 @@ class _LicenseCameraState extends CameraAppState {
 
   Future<void> classifyLicense() async {
     try {
-      String path = await captureImage();
-      await db
-          .collection('license')
-          .doc(path)
-          .get()
-          .then((DocumentSnapshot doc) {
-        final data = doc.data();
-        if (!mounted) return;
-        Navigator.pushNamed(context, '/response', arguments: data);
-      });
+      final String path = await captureImage();
+      final response = await http.post(
+        Uri.parse('http://'),
+        body: {'image': path},
+      );
+      if (!mounted) return;
+      Navigator.of(context).pushNamed('/response', arguments: response.body);
+      // recognize license
+      // print("Found");
       // classify(path);
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 }
