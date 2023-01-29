@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "295812215003",
+    "project_id": "mero-kagaj-patra-ffd1f",
+    "storage_bucket": "mero-kagaj-patra-ffd1f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295812215003:android:65edefc2e57749a2d35cfe",
+        "android_client_info": {
+          "package_name": "com.example.mero_kagaj_patra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295812215003-1onqdpr7gll40b3irqt5ob103dbdr2kn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcW79jmwemss-i8_Fg5_76gJ86SR2Rh-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295812215003-1onqdpr7gll40b3irqt5ob103dbdr2kn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

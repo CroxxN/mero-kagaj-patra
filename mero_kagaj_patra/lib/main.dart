@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:mero_kagaj_patra/src/Recognize/RecognizeMain.dart';
 import 'package:mero_kagaj_patra/src/Reponse/Reponse.dart';
 import 'package:mero_kagaj_patra/src/Validation/validation.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() async {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
@@ -22,9 +27,6 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    // await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
     final String response = jsonEncode({
       "name": "Rajesh",
       "valid": true,

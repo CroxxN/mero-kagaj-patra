@@ -37,7 +37,8 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
             if (isLoading)
               const CircularProgressIndicator()
             else
-              Column(
+              Center(
+                  child: Column(
                 children: <Widget>[
                   Container(
                     padding: const EdgeInsets.all(10.0),
@@ -45,13 +46,30 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
                   ),
                   Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Valid: ${response['valid']}"),
+                    child: Text("Vehicle Company: ${response['Company']}"),
                   ),
                   Container(
                       padding: const EdgeInsets.all(10.0),
-                      child: Text("Expiry Data: ${response['expiry']}")),
+                      child: Text("Model: ${response['Model']}")),
+                  Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child:
+                          Text("Chaise Number: ${response['chaiseNumber']}")),
+                  Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                          "Manufactured Date: ${response['manufacturedDate']}")),
+                  Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("Expiry Data: ${response['ExpiryDate']}")),
+                  Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("Horse Power: ${response['HorsePower']}")),
+                  Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("Last Tax Paid: ${response['lastTaxPaid']}")),
                 ],
-              )
+              ))
           ],
         ),
       ),
@@ -62,7 +80,7 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
     final db = FirebaseFirestore.instance;
     Object? result = '';
     await db
-        .collection('license')
+        .collection('kagaj')
         .doc(widget.response)
         .get()
         .then((DocumentSnapshot doc) {

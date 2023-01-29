@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mero_kagaj_patra/src/camerautil.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class LicenseCamera extends CameraApp {
   @override
@@ -33,16 +34,28 @@ class _LicenseCameraState extends CameraAppState {
   Future<void> classifyLicense() async {
     try {
       final String path = await captureImage();
-      final response = await http.post(
-        Uri.parse('http://'),
-        body: {'image': path},
-      );
+      final request = http.MultipartRequest('POST',
+          Uri.parse('https://api.platerecognizer.com/v1/plate-reader/'));
+      final file = await http.MultipartFile.fromPath('image', path);
+      request.files.add(file);
+      request.fields.addAll({
+        "country": "np",
+      });
+      request.headers.addAll({
+        "Authorization": "Token ",
+      });
+      final response = await request.send();
+      final String responseString =
+          await response.stream.transform(utf8.decoder).join();
+      final Map<String, dynamic> responseJson = jsonDecode(responseString);
       if (!mounted) return;
-      Navigator.of(context).pushNamed('/response', arguments: response.body);
+      Navigator.of(context).pushNamed('/response',
+          arguments: responseJson['results'][0]['plate']);
       // recognize license
       // print("Found");
       // classify(path);
     } catch (e) {
+      return;
       // print(e);
     }
   }

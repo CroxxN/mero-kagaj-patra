@@ -79,6 +79,7 @@ class AlignedButton extends StatelessWidget {
           top: containerMarginTop,
           left: containerMarginSymmetric,
           right: containerMarginSymmetric,
+          bottom: containerMarginSymmetric,
         ),
         child: IconButton(
           tooltip: toolTip,
