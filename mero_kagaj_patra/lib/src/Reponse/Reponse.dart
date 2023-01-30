@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ResponseMainScreen extends StatefulWidget {
   final String response;
@@ -18,12 +17,7 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
   Map<String, dynamic> response = {};
   bool isLoading = true;
   ResponseMainScreenState() {
-    getLicensePlateNumber().then((value) {
-      setState(() {
-        response = value;
-        isLoading = false;
-      });
-    });
+    response = getLicensePlateNumber();
   }
   @override
   Widget build(BuildContext context) {
@@ -34,58 +28,54 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
       body: Center(
         child: Column(
           children: <Widget>[
-            if (isLoading)
-              const CircularProgressIndicator()
-            else
-              Center(
-                  child: Column(
-                children: <Widget>[
-                  Container(
+            Center(
+                child: Column(
+              children: <Widget>[
+                Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Name: ${response['name']}"),
-                  ),
-                  Container(
+                    child: const Text("Name: Ashsan Panday")),
+                Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text("Vehicle Company: Toyota"),
+                ),
+                Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Vehicle Company: ${response['Company']}"),
-                  ),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text("Model: ${response['Model']}")),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child:
-                          Text("Chaise Number: ${response['chaiseNumber']}")),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                          "Manufactured Date: ${response['manufacturedDate']}")),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text("Expiry Data: ${response['ExpiryDate']}")),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text("Horse Power: ${response['HorsePower']}")),
-                  Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text("Last Tax Paid: ${response['lastTaxPaid']}")),
-                ],
-              ))
+                    child: Text("Model: Corolla")),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Chaise Number: 123456789")),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Manufactured Date: 2010-01-01")),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Expiry Data: 2020-01-07")),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Horse Power: 250")),
+                Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text("Last Tax Paid: 2021-01-09")),
+              ],
+            ))
           ],
         ),
       ),
     );
   }
 
-  Future<Map<String, dynamic>> getLicensePlateNumber() async {
-    final db = FirebaseFirestore.instance;
-    Object? result = '';
-    await db
-        .collection('kagaj')
-        .doc(widget.response)
-        .get()
-        .then((DocumentSnapshot doc) {
-      result = doc.data();
+  Map<String, dynamic> getLicensePlateNumber() {
+    final result = jsonEncode({
+      "name": "Ahsan",
+      "Company": "Toyota",
+      "Model": "Corolla",
+      "chaiseNumber": "123456789",
+      "manufacturedDate": "2021-01-01",
+      "ExpiryDate": "2021-01-01",
+      "HorsePower": "1000",
+      "lastTaxPaid": "2021-01-01"
     });
+
     return jsonDecode(result.toString());
   }
 }

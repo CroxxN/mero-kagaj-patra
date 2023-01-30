@@ -17,7 +17,7 @@ class _LicenseCameraState extends CameraAppState {
         if (snapshot.connectionState == ConnectionState.done) {
           return GestureDetector(
               excludeFromSemantics: true,
-              onDoubleTap: classifyLicense,
+              onTap: classifyLicense,
               child: Tooltip(
                   // add Tooltip for screen readers
                   message: "Double Tap to Identify License",
@@ -31,32 +31,33 @@ class _LicenseCameraState extends CameraAppState {
     );
   }
 
-  Future<void> classifyLicense() async {
-    try {
-      final String path = await captureImage();
-      final request = http.MultipartRequest('POST',
-          Uri.parse('https://api.platerecognizer.com/v1/plate-reader/'));
-      final file = await http.MultipartFile.fromPath('image', path);
-      request.files.add(file);
-      request.fields.addAll({
-        "country": "np",
-      });
-      request.headers.addAll({
-        "Authorization": "Token ",
-      });
-      final response = await request.send();
-      final String responseString =
-          await response.stream.transform(utf8.decoder).join();
-      final Map<String, dynamic> responseJson = jsonDecode(responseString);
-      if (!mounted) return;
-      Navigator.of(context).pushNamed('/response',
-          arguments: responseJson['results'][0]['plate']);
-      // recognize license
-      // print("Found");
-      // classify(path);
-    } catch (e) {
-      return;
-      // print(e);
-    }
+  void classifyLicense() {
+    Navigator.of(context).pushNamed('/validation', arguments: "BA1JA3269");
+    // try {
+    //   final String path = await captureImage();
+    //   final request = http.MultipartRequest('POST',
+    //       Uri.parse('https://api.platerecognizer.com/v1/plate-reader/'));
+    //   final file = await http.MultipartFile.fromPath('image', path);
+    //   request.files.add(file);
+    //   request.fields.addAll({
+    //     "country": "np",
+    //   });
+    //   request.headers.addAll({
+    //     "Authorization": "Token ",
+    //   });
+    //   final response = await request.send();
+    //   final String responseString =
+    //       await response.stream.transform(utf8.decoder).join();
+    //   final Map<String, dynamic> responseJson = jsonDecode(responseString);
+    //   if (!mounted) return;
+    //   Navigator.of(context).pushNamed('/response',
+    //       arguments: responseJson['results'][0]['plate']);
+    //   // recognize license
+    //   // print("Found");
+    //   // classify(path);
+    // } catch (e) {
+    //   return;
+    //   // print(e);
+    // }
   }
 }

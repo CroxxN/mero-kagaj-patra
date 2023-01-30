@@ -29,6 +29,13 @@
             {
               "client_id": "295812215003-1onqdpr7gll40b3irqt5ob103dbdr2kn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "295812215003-p897r3fm0ian01frcoamqggld1eh2nv2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.meroKagajPatra"
+              }
             }
           ]
         }
