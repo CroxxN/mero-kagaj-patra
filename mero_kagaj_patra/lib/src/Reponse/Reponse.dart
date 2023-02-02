@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
@@ -17,7 +17,12 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
   Map<String, dynamic> response = {};
   bool isLoading = true;
   ResponseMainScreenState() {
-    response = getLicensePlateNumber();
+    getLicensePlateNumber(widget.response).then((value) {
+      setState(() {
+        response = value;
+        isLoading = false;
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -31,31 +36,33 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
             Center(
                 child: Column(
               children: <Widget>[
+                const Padding(padding: EdgeInsets.all(10.0)),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: const Text("Name: Ashsan Panday")),
+                    child: Text("Name: $response['name']")),
                 Container(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text("Vehicle Company: Toyota"),
+                  child: Text("Vehicle Company: $response['vehicle_company']"),
                 ),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Model: Corolla")),
+                    child: Text("Model: $response['model']")),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Chaise Number: 123456789")),
+                    child: Text("Chaise Number: $response['chaise_number']")),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Manufactured Date: 2010-01-01")),
+                    child: Text(
+                        "Manufactured Date: $response['manufactured_date']")),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Expiry Data: 2020-01-07")),
+                    child: Text("Expiry Data: $response['expiry_date']")),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Horse Power: 250")),
+                    child: Text("Horse Power: $response['horse_power']")),
                 Container(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text("Last Tax Paid: 2021-01-09")),
+                    child: Text("Last Tax Paid: $response['last_tax_paid']")),
               ],
             ))
           ],
@@ -64,18 +71,15 @@ class ResponseMainScreenState extends State<ResponseMainScreen> {
     );
   }
 
-  Map<String, dynamic> getLicensePlateNumber() {
-    final result = jsonEncode({
-      "name": "Ahsan",
-      "Company": "Toyota",
-      "Model": "Corolla",
-      "chaiseNumber": "123456789",
-      "manufacturedDate": "2021-01-01",
-      "ExpiryDate": "2021-01-01",
-      "HorsePower": "1000",
-      "lastTaxPaid": "2021-01-01"
-    });
-
-    return jsonDecode(result.toString());
+  Future<Map<String, dynamic>> getLicensePlateNumber(String number) async {
+    final db = FirebaseFirestore.instance;
+    DocumentSnapshot<Map<String, dynamic>> result;
+    try {
+      result = await db.collection('kagaj').doc(number).get();
+      return result.data() as Map<String, dynamic>;
+    } catch (e) {
+      print(e);
+      return e as Map<String, dynamic>;
+    }
   }
 }

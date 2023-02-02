@@ -7,11 +7,17 @@ import 'package:mero_kagaj_patra/src/Reponse/Reponse.dart';
 import 'package:mero_kagaj_patra/src/Validation/validation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'dart:async';
 
-void main() {
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print(e);
+  }
   runApp(const MyApp());
 }
 

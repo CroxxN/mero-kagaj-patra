@@ -16,7 +16,7 @@ class CameraAppState extends State<CameraApp> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    initCamera().then((value) {});
+    initCamera();
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -71,7 +71,7 @@ class CameraAppState extends State<CameraApp> with WidgetsBindingObserver {
     );
   }
 
-  Future<void> initCamera() async {
+  void initCamera() async {
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
     // get the back camera
